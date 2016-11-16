@@ -1,3 +1,4 @@
+
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var kbd;
 var spaceship;
@@ -32,7 +33,7 @@ function update() {
         spaceship.body.acceleration.set(0);
     }
     
-    if (kbd.left.isDow
+    if (kbd.left.isDown)
     {
         spaceship.body.angularVelocity = -300;
     }
@@ -47,4 +48,3 @@ function update() {
 
 
 }
-
