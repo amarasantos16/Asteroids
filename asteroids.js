@@ -15,7 +15,9 @@ function create() {
 
     //  and its physics settings
     game.physics.enable(spaceship, Phaser.Physics.ARCADE);
-
+ 
+     spaceship.body.drag.set(100);
+    spaceship.body.maxVelocity.set(200);
 }
 
 
@@ -29,5 +31,20 @@ function update() {
     {
         spaceship.body.acceleration.set(0);
     }
+    
+    if (kbd.left.isDow
+    {
+        spaceship.body.angularVelocity = -300;
+    }
+    else if (kbd.right.isDown)
+    {
+        spaceship.body.angularVelocity = 300;
+    }
+    else
+    {
+        spaceship.body.angularVelocity = 0;
+    }
+
 
 }
+
