@@ -3,11 +3,16 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var kbd;
 var spaceship;
+var asteroid;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
+    game.load.image('asteroid', 'asteroid.png'); 
+    
     kbd = game.input.keyboard.createCursorKeys();
+
 }
+            
 
 function create() {
 
@@ -23,9 +28,25 @@ function create() {
     //  This is the collision rule
     game.world.setBounds(0, 0, 800, 600);
    spaceship.body.collideWorldBounds = true;
-   spaceship.body.setCircle(15);
-   // some touch ups
-   spaceship.scale.setTo(2, 2);
+   spaceship.body.setCircle(15)
+   
+   asteroid = game.add.sprite (300, 300, 'asteroid'); 
+   asteroid.anchor.set(1);
+    
+    //  and its physics settings
+    game.physics.enable(asteroid, Phaser.Physics.ARCADE);
+ 
+    asteroid.body.velocity.x = 67;
+    asteroid.body.velocity.y = 139;
+    asteroid.body.angularVelocity = 30;
+
+    asteroid.speed = 100;
+    
+    //  This is the collision rule
+   asteroid.body.collideWorldBounds = true;
+   asteroid.body.setCircle(15)
+    
+    
 
 }
 
