@@ -23,7 +23,9 @@ function create() {
     //  This is the collision rule
     game.world.setBounds(0, 0, 800, 600);
    spaceship.body.collideWorldBounds = true;
-   spaceship.body.setCircle(15)
+   spaceship.body.setCircle(15);
+   // some touch ups
+   spaceship.scale.setTo(2, 2);
 
 }
 
