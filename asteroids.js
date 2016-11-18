@@ -3,6 +3,7 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var kbd;
 var spaceship;
+var asteroid;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
@@ -20,6 +21,9 @@ function create() {
  
      spaceship.body.drag.set(100);
     spaceship.body.maxVelocity.set(200);
+    // asteroids 
+    
+    asteroid = game.add.sprite (300, 300, 'asteroid'); 
 }
 
 
