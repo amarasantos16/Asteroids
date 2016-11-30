@@ -7,7 +7,7 @@ var asteroid;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
-    game.load.image('asteroid', 'asteroid.png'); 
+    game.load.image('asteroid', 'laser.png'); 
     
     kbd = game.input.keyboard.createCursorKeys();
 
@@ -27,7 +27,7 @@ function create() {
     spaceship.body.maxVelocity.set(200);
     //  This is the collision rule
     game.world.setBounds(0, 0, 800, 600);
-   spaceship.body.collideWorldBounds = true;
+   spaceship.body.collideWorldBounds = false;
    spaceship.body.setCircle(15)
    
    asteroid = game.add.sprite (300, 300, 'asteroid'); 
@@ -52,7 +52,24 @@ function create() {
 
 
 function update() {
- 
+    
+    // check position
+    if (spaceship.position.x > game.world.bounds.width) {
+        spaceship.position.x = 0
+    }
+    
+    if (spaceship.position.x < 0) {
+        spaceship.position.x = game.world.bounds.width
+    }
+    
+    if (spaceship.position.y > game.world.bounds.height) {
+        spaceship.position.y = 0
+    }
+    
+    if (spaceship.position.y < 0) {
+        spaceship.position.y = game.world.bounds.height
+    }
+    
     if (kbd.up.isDown)  // isDown means key was pressed
     {
         game.physics.arcade.accelerationFromRotation(spaceship.rotation, 80, spaceship.body.acceleration);
