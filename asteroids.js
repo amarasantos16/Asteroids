@@ -3,11 +3,17 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var kbd;
 var spaceship;
-var asteroids = []
+var asteroids = [];
+
+var bullets;
+
+var fireRate = 100;
+var nextFire = 0;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
-    game.load.image('asteroid', 'asteroid.gif'); 
+    game.load.image('asteroid', 'asteroid.gif');
+    game.load.image('bullet', 'Laser.png');
     
     kbd = game.input.keyboard.createCursorKeys();
 }
@@ -25,9 +31,18 @@ function create() {
     //  This is the collision rule
     game.world.setBounds(0, 0, 800, 600);
     spaceship.body.collideWorldBounds = false;
-    spaceship.body.setCircle(15)   
+    spaceship.body.setCircle(15);
     
-    makeAsteroids(7)
+    makeAsteroids(7);
+    
+    // bullets
+    bullets = game.add.group();
+    bullets.enableBody = true;
+    bullets.physicsBodyType = Phaser.Physics.ARCADE;
+
+    bullets.createMultiple(50, 'bullet');
+    bullets.setAll('checkWorldBounds', true);
+    bullets.setAll('outOfBoundsKill', true);
 }
 
 function update() {
@@ -88,9 +103,14 @@ function checkAsteroidCollision() {
         checkWorldPosition(a)
         var collided = game.physics.arcade.collide(spaceship, a)
         if (collided) {
-            spaceship.kill()
+            spaceship.kill();
+            
+            asteroids.forEach(function(a) { 
+                a.kill();
+            });
+            create();            
         }
-    })
+    });
 }
 
 function makeAsteroids(numberOfAsteroids) {
