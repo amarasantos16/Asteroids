@@ -49,6 +49,13 @@ function update() {
     checkWorldPosition(spaceship)
     move()
     checkAsteroidCollision()
+    
+    //spaceship.rotation = game.physics.arcade.angleToPointer(spaceship);
+    
+    if (game.input.activePointer.isDown)
+    {
+        fire();
+    }
 }
 
 function checkWorldPosition(object) {
@@ -133,6 +140,21 @@ function makeAsteroids(numberOfAsteroids) {
        
        asteroids.push(asteroid)
     }
+}
+
+function fire() {
+
+    if (game.time.now > nextFire && bullets.countDead() > 0)
+    {
+        nextFire = game.time.now + fireRate;
+
+        var bullet = bullets.getFirstDead();
+        
+        bullet.reset(spaceship.x - 8, spaceship.y - 8);
+
+        game.physics.arcade.moveToPointer(bullet, 300);
+    }
+
 }
 
 // From Mozilla
