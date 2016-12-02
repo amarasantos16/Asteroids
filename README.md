@@ -12,8 +12,8 @@ Write an Asteroids game in Phaser
 
 - fix asteroid and ship collision detection by making ship image fill its canvas
 - add a background image
-- add bullets and ability to fire them
 - asteroid sizes
+- Add collision detecion to bullets
 - Say game over when player dies
 - Keep score
 - Add enemy ships!
@@ -24,3 +24,4 @@ Write an Asteroids game in Phaser
 - ~~create html~~ ✓
 - ~~get an image on the screen~~ ✓
 - ~~re-export spaceship piskel image rotated 90 degrees counter-clockwise~~
+- ~~add bullets and ability to fire them~~
