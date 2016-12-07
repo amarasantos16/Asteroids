@@ -135,6 +135,7 @@ function checkBulletCollision() {
             if (collided) {
                 a.kill();
                 b.kill();
+                makeAsteroid(1);
                 score++;
             }
         });
