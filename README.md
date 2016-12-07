@@ -16,7 +16,7 @@ Write an Asteroids game in Phaser
 - Add collision detecion to bullets
 - Say game over when player dies
 - Keep score
-- Add enemy ships!
+- Add enemy ships! (done)
 
 - ~~add asteroids and give them movement~~
 - ~~check for collisions between ship and asteroids~~
