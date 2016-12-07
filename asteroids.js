@@ -20,7 +20,7 @@ function preload() {
 
 function create() {    
     //  Our player ship
-    spaceship = game.add.sprite(300, 300, 'spaceship');
+    spaceship = game.add.sprite(400, 400, 'spaceship');
     spaceship.anchor.set(0.5);
 
     //  and its physics settings
@@ -31,9 +31,9 @@ function create() {
     //  This is the collision rule
     game.world.setBounds(0, 0, 800, 600);
     spaceship.body.collideWorldBounds = false;
-    spaceship.body.setCircle(15);
+    spaceship.body.setCircle(20);
     
-    makeAsteroids(7);
+    makeAsteroids(2);
     
     // bullets
     bullets = game.add.group();
@@ -46,9 +46,10 @@ function create() {
 }
 
 function update() {
-    checkWorldPosition(spaceship)
-    move()
-    checkAsteroidCollision()
+    checkWorldPosition(spaceship);
+    move();
+    checkAsteroidCollision();
+    checkBulletCollision();
     
     //spaceship.rotation = game.physics.arcade.angleToPointer(spaceship);
     
@@ -57,23 +58,23 @@ function update() {
         fire();
     }
 }
-
+// This function makes the ship/asteroids teleport across the screen
 function checkWorldPosition(object) {
 // check position
     if (object.position.x > game.world.bounds.width) {
-        object.position.x = 0
+        object.position.x = 0;
     }
     
-    if (object.position.x < 0) {
-        object.position.x = game.world.bounds.width
+    else if (object.position.x < 0) {
+        object.position.x = game.world.bounds.width;
     }
     
     if (object.position.y > game.world.bounds.height) {
-        object.position.y = 0
+        object.position.y = 0;
     }
     
-    if (object.position.y < 0) {
-        object.position.y = game.world.bounds.height
+    else if (object.position.y < 0) {
+        object.position.y = game.world.bounds.height;
     }   
 }
 
@@ -107,8 +108,8 @@ function move() {
 
 function checkAsteroidCollision() {
     asteroids.forEach(function(a){
-        checkWorldPosition(a)
-        var collided = game.physics.arcade.collide(spaceship, a)
+        checkWorldPosition(a);
+        var collided = game.physics.arcade.collide(spaceship, a);
         if (collided) {
             spaceship.kill();
             
@@ -117,6 +118,22 @@ function checkAsteroidCollision() {
             });
             create();            
         }
+    });
+}
+
+function checkBulletCollision() {
+    bullets.forEach(function(b){
+        asteroids.forEach(function(a){
+        
+            checkWorldPosition(a);
+            
+            var collided = game.physics.arcade.collide(a, b);
+            
+            if (collided) {
+                a.kill();
+                b.kill();
+            }
+        });
     });
 }
 
