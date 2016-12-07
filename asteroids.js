@@ -1,14 +1,12 @@
-
-
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 var kbd;
 var spaceship;
 var asteroids = [];
-
 var bullets;
 
 var fireRate = 100;
 var nextFire = 0;
+var score = 0;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
@@ -16,6 +14,7 @@ function preload() {
     game.load.image('bullet', 'Laser.png');
     
     kbd = game.input.keyboard.createCursorKeys();
+    spaceKey = game.input.keyboard.spaceKey;
 }
 
 function create() {    
@@ -33,7 +32,7 @@ function create() {
     spaceship.body.collideWorldBounds = false;
     spaceship.body.setCircle(20);
     
-    makeAsteroids(2);
+    makeAsteroids(20);
     
     // bullets
     bullets = game.add.group();
@@ -43,6 +42,9 @@ function create() {
     bullets.createMultiple(50, 'bullet');
     bullets.setAll('checkWorldBounds', true);
     bullets.setAll('outOfBoundsKill', true);
+    
+    //reset score
+    score = 0;
 }
 
 function update() {
@@ -53,7 +55,9 @@ function update() {
     
     //spaceship.rotation = game.physics.arcade.angleToPointer(spaceship);
     
-    if (game.input.activePointer.isDown)
+    this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+    if (this.spaceKey.isDown)
     {
         fire();
     }
@@ -124,7 +128,6 @@ function checkAsteroidCollision() {
 function checkBulletCollision() {
     bullets.forEach(function(b){
         asteroids.forEach(function(a){
-        
             checkWorldPosition(a);
             
             var collided = game.physics.arcade.collide(a, b);
@@ -132,6 +135,7 @@ function checkBulletCollision() {
             if (collided) {
                 a.kill();
                 b.kill();
+                score++;
             }
         });
     });
@@ -169,7 +173,9 @@ function fire() {
         
         bullet.reset(spaceship.x - 8, spaceship.y - 8);
 
-        game.physics.arcade.moveToPointer(bullet, 300);
+        //game.physics.arcade.moveToPointer(bullet, 300);
+        bullet.rotation = spaceship.rotation;
+            game.physics.arcade.velocityFromRotation(spaceship.rotation, 400, bullet.body.velocity);
     }
 
 }
