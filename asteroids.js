@@ -144,7 +144,7 @@ function checkBulletCollision() {
 function makeAsteroids(numberOfAsteroids) {
     for (var i = 0; i < numberOfAsteroids; i++) {
         
-        var asteroid = game.add.sprite(getRandomBetween(0, 800), getRandomBetween(0, 600), 'asteroid'); 
+        var asteroid = game.add.sprite(getRandomBetween(0, 200), getRandomBetween(0, 100), 'asteroid'); 
     
         //  and its physics settings
         game.physics.enable(asteroid, Phaser.Physics.ARCADE);
