@@ -4,20 +4,28 @@ var spaceship;
 var asteroids = [];
 var bullets;
 
-var fireRate = 100;
+var fireRate = 270;
 var nextFire = 0;
 var score = 0;
+var highscore = 0;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
     game.load.image('asteroid', 'asteroid.gif');
-    game.load.image('bullet', 'Laser.png');
+    game.load.image('bullet', 'laser2.png');
+  
     
     kbd = game.input.keyboard.createCursorKeys();
     spaceKey = game.input.keyboard.spaceKey;
 }
 
-function create() {    
+function create() { 
+    //  This creates the scoreboard
+    scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
+    scoreText.
+    highScoreText = game.add.text(200, 16, 'High Score: ' + highscore, { fontSize: '32px', fill: '#fff' });
+
+
     //  Our player ship
     spaceship = game.add.sprite(400, 400, 'spaceship');
     spaceship.anchor.set(0.5);
@@ -30,9 +38,10 @@ function create() {
     //  This is the collision rule
     game.world.setBounds(0, 0, 800, 600);
     spaceship.body.collideWorldBounds = false;
-    spaceship.body.setCircle(20);
+    spaceship.body.setCircle(15);
+    spaceship.scale.setTo(2, 2)
     
-    makeAsteroids(20);
+    makeAsteroids(25);
     
     // bullets
     bullets = game.add.group();
@@ -119,6 +128,8 @@ function checkAsteroidCollision() {
             
             asteroids.forEach(function(a) { 
                 a.kill();
+                scoreText.text = '';
+                highScoreText.text = '';
             });
             create();            
         }
@@ -133,10 +144,16 @@ function checkBulletCollision() {
             var collided = game.physics.arcade.collide(a, b);
             
             if (collided) {
+                // play explosion at: a.position.x, a.position.y
                 a.kill();
                 b.kill();
-                makeAsteroid(1);
+                makeAsteroids(1);
                 score++;
+                scoreText.text = 'Score: ' + score;
+                if (score > highscore){
+                    highscore = score;
+                    highScoreText.text  = 'High Score: ' + score;    
+                }
             }
         });
     });
@@ -152,13 +169,14 @@ function makeAsteroids(numberOfAsteroids) {
         
         asteroid.body.velocity.x = getRandomBetween(-90,90);
         asteroid.body.velocity.y = getRandomBetween(-90,90);
-        asteroid.body.angularVelocity = 15;
-        
-        asteroid.speed = 200;
+        asteroid.body.angularVelocity = 30;
+        asteroid.anchor.set(0.5);
+        asteroid.speed = 400;
         
         //  This is the collision rule
        asteroid.body.collideWorldBounds = false;
-       asteroid.body.setCircle(15)
+       asteroid.body.setCircle(10);
+    
        
        asteroids.push(asteroid)
     }
