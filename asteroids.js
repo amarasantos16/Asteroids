@@ -7,12 +7,12 @@ var bullets;
 var fireRate = 270;
 var nextFire = 0;
 var score = 0;
-var highscore = 0;
+var highScore = 0;
 
 function preload() {
     game.load.image('spaceship', 'spaceship.gif');
     game.load.image('asteroid', 'asteroid.gif');
-    game.load.image('bullet', 'laser2.png');
+    game.load.image('bullet', 'laser3.png');
   
     
     kbd = game.input.keyboard.createCursorKeys();
@@ -22,8 +22,7 @@ function preload() {
 function create() { 
     //  This creates the scoreboard
     scoreText = game.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#fff' });
-    scoreText.
-    highScoreText = game.add.text(200, 16, 'High Score: ' + highscore, { fontSize: '32px', fill: '#fff' });
+    highScoreText = game.add.text(200, 16, 'High Score: ' + highScore, { fontSize: '32px', fill: '#fff' });
 
 
     //  Our player ship
@@ -150,8 +149,8 @@ function checkBulletCollision() {
                 makeAsteroids(1);
                 score++;
                 scoreText.text = 'Score: ' + score;
-                if (score > highscore){
-                    highscore = score;
+                if (score > highScore){
+                    highScore = score;
                     highScoreText.text  = 'High Score: ' + score;    
                 }
             }
@@ -190,11 +189,11 @@ function fire() {
 
         var bullet = bullets.getFirstDead();
         
-        bullet.reset(spaceship.x - 8, spaceship.y - 8);
+        bullet.reset(spaceship.x, spaceship.y);
 
         //game.physics.arcade.moveToPointer(bullet, 300);
         bullet.rotation = spaceship.rotation;
-            game.physics.arcade.velocityFromRotation(spaceship.rotation, 400, bullet.body.velocity);
+        game.physics.arcade.velocityFromRotation(spaceship.rotation, 400, bullet.body.velocity);
     }
 
 }
